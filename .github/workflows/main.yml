@@ -11,13 +11,16 @@ jobs:
     steps:
       - name: Checkout Repository Code
         uses: actions/checkout@v4
+
       - name: Update HTML File
         run: |
-          CURRENT_DATE=$(date '+%Y-%m-%d %H:%M:%S')
+          CURRENT_DATE=$(date '+%Y-%m-%d_%H:%M:%S')
           sed -i "/<\/body>/i <p>Updated by ${{ github.actor }} on ${CURRENT_DATE}</p>" index.html
+
       - name: Update README Log
         run: |
-          echo "### Updated by ${{ github.actor }} on $(date '+%Y-%m-%d %H:%M:%S') [Commit: $(git rev-parse --short HEAD)]" >> README.md
+          echo "### Updated by ${{ github.actor }} on $(date '+%Y-%m-%d %H:%M:%S') [Commit: \$(git rev-parse --short HEAD)]" >> README.md
+
       - name: Commit and Push Changes
         run: |
           git config --global user.name "github-actions[bot]"
